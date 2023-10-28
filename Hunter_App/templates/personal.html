@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Personal</h2>
+
+    <!-- Mostrar mensajes -->
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+    {% endfor %}
+
+    {% if not request.GET.search %}
+    <!-- Formulario para agregar personal (solo usuarios autenticados) -->
+    {% if user.is_authenticated %}
+    <h3 class="mt-5">Agregar Personal</h3>
+    <form method="post" enctype="multipart/form-data" class="mb-4">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field|add_class:"form-control" }}
+                {% if field.errors %}
+                    <div class="invalid-feedback">
+                        {{ field.errors.0 }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        
+        <button type="submit" name="add" class="btn btn-primary">Agregar</button>
+    </form>
+    <hr>
+    {% endif %}
+    {% endif %}
+
+    <!-- Búsqueda -->
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search" placeholder="Buscar por nombre" value="{{ request.GET.search }}">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-outline-primary">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Mostrar listado de personal con tarjetas -->
+    <div class="row">
+        {% for person in personal %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ person.foto.url }}" class="card-img-top" alt="{{ person.nombre }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ person.nombre }}</h5>
+                    <p class="card-text"><strong>Puesto:</strong> {{ person.puesto }}</p>
+                    <p class="card-text">{{ person.descripcion }}</p>
+                    {% if user.is_authenticated %}
+                    <div class="d-flex justify-content-between">
+                        <!-- Botón para modificar -->
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ person.id }}">
+                            <button type="submit" name="modify" class="btn btn-warning btn-sm">Editar</button>
+                        </form>
+
+                        <!-- Botón para eliminar -->
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ person.id }}">
+                            <button type="submit" name="delete" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p>No se encontraron resultados.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

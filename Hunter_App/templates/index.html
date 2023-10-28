@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <title>SeguridadPro - Bienvenido</title>
+</head>
+
+<body>
+
+    <!-- Hero Section -->
+    <section class="bg-dark text-white py-5" style="background-image: url('https://images.unsplash.com/photo-1568393691622-c16fb208e307'); background-size: cover; background-position: center;">
+        <div class="container text-center py-5">
+            <h1 class="animate__animated animate__fadeIn">Bienvenido a SeguridadPro</h1>
+            <p class="animate__animated animate__fadeInUp">Ofreciendo la mejor seguridad desde 1999</p>
+        </div>
+    </section>
+
+    <!-- Servicios -->
+    <section class="container py-5">
+        <h2 class="text-center mb-4 animate__animated animate__fadeIn">Nuestros Servicios</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1603502538047-ff4e8f3fc1b3" alt="Servicio 1" class="img-fluid mb-3 animate__animated animate__zoomIn">
+                <h3>Seguridad Armada</h3>
+                <p>Profesionales altamente capacitados para garantizar su seguridad.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1590635332764-54172d8e7d98" alt="Servicio 2" class="img-fluid mb-3 animate__animated animate__zoomIn">
+                <h3>Protección VIP</h3>
+                <p>Guardaespaldas entrenados para la protección de personalidades y VIPs.</p>
+            </div>
+            <div class="col-md-4">
+                <img src="https://images.unsplash.com/photo-1571174159412-8b7d1240b671" alt="Servicio 3" class="img-fluid mb-3 animate__animated animate__zoomIn">
+                <h3>Monitoreo 24/7</h3>
+                <p>Centro de monitoreo activo las 24 horas del día, los 7 días de la semana.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-info text-white py-5">
+        <div class="container text-center">
+            <h2 class="animate__animated animate__fadeIn">¿Listo para una seguridad incomparable?</h2>
+            <p class="animate__animated animate__fadeInUp">Contacta con nosotros hoy y descubre cómo podemos ayudarte.</p>
+            <a href="#contacto" class="btn btn-dark animate__animated animate__pulse animate__infinite">Contactar ahora</a>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
+
+{% endblock %}
