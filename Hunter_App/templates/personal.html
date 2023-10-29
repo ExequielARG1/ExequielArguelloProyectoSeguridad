@@ -10,27 +10,11 @@
     {% endfor %}
 
     {% if not request.GET.search %}
-    <!-- Formulario para agregar personal (solo usuarios autenticados) -->
+    <!-- Formulario para agregar o modificar personal (solo usuarios autenticados) -->
     {% if user.is_authenticated %}
-    <h3 class="mt-5">Agregar Personal</h3>
-    <form method="post" enctype="multipart/form-data" class="mb-4">
-        {% csrf_token %}
-        
-        {% for field in form %}
-            <div class="mb-3">
-                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                {{ field|add_class:"form-control" }}
-                {% if field.errors %}
-                    <div class="invalid-feedback">
-                        {{ field.errors.0 }}
-                    </div>
-                {% endif %}
-            </div>
-        {% endfor %}
-        
-        <button type="submit" name="add" class="btn btn-primary">Agregar</button>
-    </form>
-    <hr>
+        <!-- Botón para activar el modal de agregar -->
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#personModal" data-action="add">Agregar</button>
+        <hr>
     {% endif %}
     {% endif %}
 
@@ -48,20 +32,18 @@
     <div class="row">
         {% for person in personal %}
         <div class="col-md-4 mb-4">
-            <div class="card">
+            <div class="card h-100">
                 <img src="{{ person.foto.url }}" class="card-img-top" alt="{{ person.nombre }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ person.nombre }}</h5>
                     <p class="card-text"><strong>Puesto:</strong> {{ person.puesto }}</p>
                     <p class="card-text">{{ person.descripcion }}</p>
-                    {% if user.is_authenticated %}
+                </div>
+                {% if user.is_authenticated %}
+                <div class="card-footer">
                     <div class="d-flex justify-content-between">
-                        <!-- Botón para modificar -->
-                        <form method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="id" value="{{ person.id }}">
-                            <button type="submit" name="modify" class="btn btn-warning btn-sm">Editar</button>
-                        </form>
+                        <!-- Botón para activar el modal de editar -->
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#personModal" data-action="modify" data-person-id="{{ person.id }}">Editar</button>
 
                         <!-- Botón para eliminar -->
                         <form method="post">
@@ -70,8 +52,8 @@
                             <button type="submit" name="delete" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>
                     </div>
-                    {% endif %}
                 </div>
+                {% endif %}
             </div>
         </div>
         {% empty %}
@@ -80,5 +62,84 @@
         </div>
         {% endfor %}
     </div>
+
+    <!-- Modal para agregar/modificar -->
+    <div class="modal fade" id="personModal" tabindex="-1" aria-labelledby="personModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="personModalLabel">Agregar/Modificar Personal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data" id="personForm">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                {{ field|add_class:"form-control" }}
+                                {% if field.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ field.errors.0 }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <input type="hidden" name="id" id="personId">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="personForm" name="add" class="btn btn-primary" id="submitButton">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtener el modal, el formulario y otros elementos relevantes
+        let personModal = document.getElementById('personModal');
+        let personForm = document.getElementById('personForm');
+        let submitButton = document.getElementById('submitButton');
+        let modalLabel = document.getElementById('personModalLabel');
+        let personIdInput = document.getElementById('personId');
+    
+        // Evento cuando el modal está a punto de mostrarse
+        personModal.addEventListener('show.bs.modal', function(event) {
+            // Obtener el botón que activó el modal
+            let button = event.relatedTarget;
+    
+            // Limpiar el formulario
+            personForm.reset();
+            personIdInput.value = '';
+    
+            // Determinar si es agregar o modificar
+            if (button.getAttribute('data-action') === 'modify') {
+                // Estás modificando
+                modalLabel.textContent = 'Modificar Personal';
+                submitButton.name = 'modify';
+                submitButton.textContent = 'Modificar';
+    
+                // Aquí puedes agregar código para llenar el formulario con los datos de la persona.
+                // Por simplicidad, supondré que tienes los datos como atributos en el botón:
+                // personForm.elements['nombre'].value = button.getAttribute('data-nombre');
+                // personForm.elements['puesto'].value = button.getAttribute('data-puesto');
+                // ... (Repite para cada campo del formulario)
+    
+                // Ajustar el input oculto con el ID de la persona
+                personIdInput.value = button.getAttribute('data-person-id');
+            } else {
+                // Estás agregando
+                modalLabel.textContent = 'Agregar Personal';
+                submitButton.name = 'add';
+                submitButton.textContent = 'Agregar';
+            }
+        });
+    
+        // Puedes agregar otros eventos o funciones si los necesitas
+    });
+    </script>
+    
+
 {% endblock %}

@@ -5,13 +5,6 @@ from .models import Personal
 from .forms import PersonalForm
 from django.contrib import messages
 
-#Se esta utilizando el paquete django-widget-tweaks para poder modificar los widgets de los formularios
-# Create your views here.
-def login_view(request):
-    return render(request, 'login.html')
-def index_view(request):
-    return render(request, 'index.html')
-
 def login_view(request):
     context = {}
 
@@ -28,6 +21,9 @@ def login_view(request):
 
     return render(request, 'login.html', context)
 
+def index_view(request):
+    return render(request, 'index.html')
+
 def personal_view(request):
     query = request.GET.get('search')
     if query:
@@ -37,31 +33,41 @@ def personal_view(request):
     else:
         personal = Personal.objects.all()
 
-    if request.user.is_authenticated:
-        # Agregar
-        if request.method == "POST" and 'add' in request.POST:
-            form = PersonalForm(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
-                return redirect('personal_view')
+    form = None
+    person_id = None
 
-        # Modificar
-        elif request.method == "POST" and 'modify' in request.POST:
-            person = get_object_or_404(Personal, id=request.POST.get('id'))
-            form = PersonalForm(request.POST, request.FILES, instance=person)
-            if form.is_valid():
-                form.save()
-                return redirect('personal_view')
+    try:  # Manejo básico de errores
+        if request.user.is_authenticated:
+            person_id = request.POST.get('id')
 
-        # Eliminar
-        elif request.method == "POST" and 'delete' in request.POST:
-            person = get_object_or_404(Personal, id=request.POST.get('id'))
-            person.delete()
-            return redirect('personal_view')
+            if request.method == "POST":
+                if 'add' in request.POST:
+                    form = PersonalForm(request.POST, request.FILES)
+                    if form.is_valid():
+                        form.save()
+                        return redirect('personal_view')
+
+                elif 'modify' in request.POST and person_id:
+                 person = get_object_or_404(Personal, id=person_id)
+                 form = PersonalForm(request.POST, request.FILES, instance=person)
+                 if form.is_valid():
+                    form.save()
+                    return redirect('personal_view')
+                 
+                elif 'delete' in request.POST:
+                    person = get_object_or_404(Personal, id=person_id)
+                    person.delete()
+                    return redirect('personal_view')
+
+                else:
+                    form = PersonalForm()
+            else:
+                form = PersonalForm()
 
         else:
-            form = PersonalForm()
-    else:
-        form = None
+            form = None
 
-    return render(request, 'personal.html', {'personal': personal, 'form': form})
+    except Exception as e:
+        messages.error(request, f"Ocurrió un error: {e}")
+
+    return render(request, 'personal.html', {'personal': personal, 'form': form, 'person_id': person_id})
