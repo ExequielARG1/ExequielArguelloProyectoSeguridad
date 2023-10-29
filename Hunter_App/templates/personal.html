@@ -1,6 +1,24 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
 {% block content %}
+<style>
+    .card-custom:hover .card-img-overlay {
+        opacity: 1;
+    }
+    .card-img-overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 1.25rem;
+        opacity: 0;
+        transition: opacity 0.5s;
+        background: rgba(0,0,0,0.6); /* fondo semi-transparente */
+        color: white;
+    }
+</style>
+
 <div class="container mt-5">
     <h2 class="mb-4">Personal</h2>
 
