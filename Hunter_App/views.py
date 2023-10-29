@@ -1,9 +1,11 @@
+# views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import Personal
-from .forms import PersonalForm
+from .models import Personal, Sucursal, AcercaDe
+from .forms import PersonalForm, SucursalForm, AcercaDeForm
 from django.contrib import messages
+
 
 def login_view(request):
     context = {}
@@ -71,3 +73,49 @@ def personal_view(request):
         messages.error(request, f"Ocurrió un error: {e}")
 
     return render(request, 'personal.html', {'personal': personal, 'form': form, 'person_id': person_id})
+
+def ubicacion_views(request):
+    sucursal = Sucursal.objects.first()  # Asumimos que solo hay una sucursal para simplificar.
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = SucursalForm(request.POST, request.FILES, instance=sucursal)
+        if form.is_valid():
+            form.save()
+            return redirect('ubicacion')  # Redirige al mismo lugar tras guardar.
+
+    else:
+        form = SucursalForm(instance=sucursal)
+
+    context = {
+        'sucursal': sucursal,
+        'form': form,
+    }
+
+    return render(request, 'ubicacion.html', context)
+
+def acerca_de_nosotros(request):
+    info = AcercaDe.objects.first()
+    
+    if request.method == "POST" and request.user.is_authenticated:
+        form = AcercaDeForm(request.POST, instance=info)
+        if form.is_valid():
+            form.save()
+            return redirect('acerca_de_nosotros')
+
+    else:
+        form = AcercaDeForm(instance=info)
+
+    return render(request, 'acercadenosotros.html', {'info': info, 'form': form})
+
+from django.shortcuts import render, redirect
+from .forms import AvatarForm
+
+def change_avatar(request):
+    if request.method == "POST":
+        form = AvatarForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = AvatarForm(instance=request.user)
+    return render(request, 'index.html', {'form': form})

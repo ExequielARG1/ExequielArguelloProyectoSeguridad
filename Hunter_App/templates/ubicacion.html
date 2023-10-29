@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-5">Sucursales de Seguridad</h2>
+
+    <div class="row mb-5 shadow rounded bg-white">
+        <!-- Imagen de la sucursal -->
+        <div class="col-md-6">
+            <img src="{{ sucursal.foto.url }}" class="d-block w-100 rounded-start" alt="Foto de Sucursal">
+        </div>
+
+        <!-- Información y ubicación de la sucursal -->
+        <div class="col-md-6 p-4">
+            <h4>Descripción:</h4>
+            <p class="text-muted">{{ sucursal.descripcion }}</p>
+            <h4>Horarios:</h4>
+            <p class="text-muted">{{ sucursal.horarios }}</p>
+            <h4>Ubicación:</h4>
+            <p class="text-muted">{{ sucursal.ubicacion }}</p>
+
+            <!-- Botón para abrir el modal de edición -->
+            {% if user.is_authenticated %}
+            <button class="btn btn-dark btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#editarModal">Modificar Información</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Modal para editar información de la sucursal -->
+    <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarModalLabel">Modificar Información de Sucursal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.descripcion.id_for_label }}" class="form-label">Descripción</label>
+                            {{ form.descripcion|add_class:"form-control" }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.horarios.id_for_label }}" class="form-label">Horarios</label>
+                            {{ form.horarios|add_class:"form-control" }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.ubicacion.id_for_label }}" class="form-label">Ubicación</label>
+                            {{ form.ubicacion|add_class:"form-control" }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.foto.id_for_label }}" class="form-label">Foto de Sucursal</label>
+                            {{ form.foto|add_class:"form-control" }}
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-dark">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

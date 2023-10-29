@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Estilos adicionales */
+    .container {
+        font-family: 'Arial', sans-serif;
+    }
+
+    .display-4 {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .text-muted {
+        color: #555 !important;
+    }
+
+    .card {
+        border: none;
+    }
+
+    .btn-dark {
+        background-color: #333;
+        border: none;
+    }
+
+    .btn-dark:hover {
+        background-color: #555;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075)!important;
+    }
+</style>
+
+<div class="container mt-5">
+    <!-- Título -->
+    <h2 class="text-center mb-5 display-4">{{ info.titulo }}</h2>
+    
+    <!-- Descripción -->
+    <div class="border p-4 rounded bg-light shadow">
+        <p class="text-muted fs-5">{{ info.descripcion }}</p>
+    </div>
+
+    {% if user.is_authenticated %}
+    <!-- Modificar información -->
+    <hr>
+    <h3 class="text-center mb-4">Modificar Información</h3>
+
+    <!-- Botón para abrir el modal -->
+    <button type="button" class="btn btn-dark btn-lg mb-3" data-bs-toggle="modal" data-bs-target="#editInfoModal">
+        Editar Información
+    </button>
+    
+    <!-- Modal para el formulario -->
+    <div class="modal fade" id="editInfoModal" tabindex="-1" aria-labelledby="editInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editInfoModalLabel">Modificar Información</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="{{ form.titulo.id_for_label }}" class="form-label">Título:</label>
+                            {{ form.titulo }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="{{ form.descripcion.id_for_label }}" class="form-label">Descripción:</label>
+                            {{ form.descripcion }}
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-lg mt-3">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
