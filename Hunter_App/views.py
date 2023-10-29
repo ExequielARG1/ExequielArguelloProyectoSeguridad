@@ -2,8 +2,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import Personal, Sucursal, AcercaDe
-from .forms import PersonalForm, SucursalForm, AcercaDeForm
+from .models import Personal, Sucursal, AcercaDe, Contact
+from .forms import PersonalForm, SucursalForm, AcercaDeForm, ContactForm, AvatarForm
 from django.contrib import messages
 
 
@@ -107,8 +107,7 @@ def acerca_de_nosotros(request):
 
     return render(request, 'acercadenosotros.html', {'info': info, 'form': form})
 
-from django.shortcuts import render, redirect
-from .forms import AvatarForm
+
 
 def change_avatar(request):
     if request.method == "POST":
@@ -119,3 +118,29 @@ def change_avatar(request):
     else:
         form = AvatarForm(instance=request.user)
     return render(request, 'index.html', {'form': form})
+def contact(request):
+    success_message = ""
+    messages = []
+    if request.user.is_authenticated:
+        messages = Contact.objects.all()
+
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            success_message = "Gracias por contactarnos! Nos pondremos en contacto contigo a la brevedad."
+            form = ContactForm()
+
+    else:
+        form = ContactForm()
+
+    context = {
+        'form': form,
+        'success_message': success_message,
+        'messages': messages
+    }
+    return render(request, 'contacto.html', context)
+def delete_message(request, message_id):
+    if request.user.is_authenticated:
+        Contact.objects.get(id=message_id).delete()
+    return redirect('contact')

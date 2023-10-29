@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Personal, Sucursal, AcercaDe, CustomUser
+from .models import Personal, Sucursal, AcercaDe, CustomUser, Contact
 
 class PersonalForm(forms.ModelForm):
     class Meta:
@@ -21,3 +21,8 @@ class AvatarForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['avatar']
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'message']

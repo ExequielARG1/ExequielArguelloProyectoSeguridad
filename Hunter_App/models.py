@@ -52,7 +52,15 @@ class CustomUser(AbstractUser):
         related_name="customuser_set",
         related_query_name="user",
     )
-    
+
+
+from django.db import models
+
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+
 #Aca vemos si se modifico o elimino a la persona para eliminar la foto
 @receiver(post_delete, sender=Personal)
 def delete_upload(sender, instance, **kwargs):

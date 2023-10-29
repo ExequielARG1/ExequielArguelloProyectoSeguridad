@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
-from Hunter_App.views import login_view, index_view, ubicacion_views,  personal_view, acerca_de_nosotros, change_avatar# Asumiendo que estas vistas están en Hunter_App.views
+from Hunter_App.views import login_view, index_view, ubicacion_views,  personal_view, acerca_de_nosotros, change_avatar, contact, delete_message# Asumiendo que estas vistas están en Hunter_App.views
 
 # No hay necesidad de importar views nuevamente si ya lo has hecho desde Hunter_App
 
@@ -17,6 +17,8 @@ urlpatterns = [
     path('ubicacion/', ubicacion_views, name='ubicacion'),
     path('acerca/', acerca_de_nosotros, name='acerca_de_nosotros'),
     path('change_avatar/', change_avatar, name='change_avatar'),
+    path('contact/', contact, name='contact'),
+    path('contact/delete/<int:message_id>/', delete_message, name='delete_message'),
     
 ]
 
