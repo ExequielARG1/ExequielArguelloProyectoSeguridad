@@ -1,7 +1,7 @@
 ﻿#Exequiel_Arguello ProyectoSeguridad
 
 LIBRERIAS UTILIZADAS;
-PILLOW
+PILLOW,
 widget_tweaks
 
 
