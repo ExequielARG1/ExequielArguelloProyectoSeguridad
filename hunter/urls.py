@@ -6,10 +6,8 @@ from django.urls import path, include
 from django.contrib.auth.views import LogoutView
 from Hunter_App.views import login_view, index_view, ubicacion_views,  personal_view, acerca_de_nosotros, change_avatar, contact, delete_message# Asumiendo que estas vistas están en Hunter_App.views
 
-# No hay necesidad de importar views nuevamente si ya lo has hecho desde Hunter_App
-
 urlpatterns = [
-    path('index/', index_view, name='index'),
+    path('', index_view, name='index'), 
     path('admin/', admin.site.urls),
     path('login/', login_view, name='login'),
     path('logout/', LogoutView.as_view(next_page=reverse_lazy('index')), name='logout'),
@@ -19,7 +17,6 @@ urlpatterns = [
     path('change_avatar/', change_avatar, name='change_avatar'),
     path('contact/', contact, name='contact'),
     path('contact/delete/<int:message_id>/', delete_message, name='delete_message'),
-    
 ]
 
 if settings.DEBUG:
