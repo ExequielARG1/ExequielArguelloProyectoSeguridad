@@ -119,7 +119,7 @@ def change_avatar(request):
         form = AvatarForm(instance=request.user)
     return render(request, 'index.html', {'form': form})
 def contact(request):
-    success_message = ""
+    message_sent = False
     messages = []
     if request.user.is_authenticated:
         messages = Contact.objects.all()
@@ -128,7 +128,7 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            success_message = "Gracias por contactarnos! Nos pondremos en contacto contigo a la brevedad."
+            message_sent = True
             form = ContactForm()
 
     else:
@@ -136,10 +136,11 @@ def contact(request):
 
     context = {
         'form': form,
-        'success_message': success_message,
+        'message_sent': message_sent,
         'messages': messages
     }
     return render(request, 'contacto.html', context)
+
 def delete_message(request, message_id):
     if request.user.is_authenticated:
         Contact.objects.get(id=message_id).delete()
