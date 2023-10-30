@@ -145,3 +145,5 @@ def delete_message(request, message_id):
     if request.user.is_authenticated:
         Contact.objects.get(id=message_id).delete()
     return redirect('contact')
+def acercademi(request):
+    return render(request, 'acercademi.html')

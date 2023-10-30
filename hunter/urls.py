@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
-from Hunter_App.views import login_view, index_view, ubicacion_views,  personal_view, acerca_de_nosotros, change_avatar, contact, delete_message# Asumiendo que estas vistas están en Hunter_App.views
+from Hunter_App.views import login_view, index_view, ubicacion_views,  personal_view, acerca_de_nosotros, change_avatar, contact, delete_message, acercademi#
+
 
 urlpatterns = [
     path('', index_view, name='index'), 
@@ -17,6 +18,7 @@ urlpatterns = [
     path('change_avatar/', change_avatar, name='change_avatar'),
     path('contact/', contact, name='contact'),
     path('contact/delete/<int:message_id>/', delete_message, name='delete_message'),
+    path('acercademi/', acercademi, name='acercademi'),
 ]
 
 if settings.DEBUG:

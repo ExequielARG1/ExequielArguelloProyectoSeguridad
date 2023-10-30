@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block head_extra %}
+    <!-- Enlace a Bootstrap CSS y AOS (Animate On Scroll) para las animaciones -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        .main-content {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .img-fluid {
+            max-width: 70%;
+            margin-top: 30px;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h3 {
+            color: #007BFF;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        hr {
+            border-color: #dee2e6;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center align-items-center">
+            <!-- Información principal -->
+            <div class="col-md-6 main-content" data-aos="fade-right">
+                <h1 class="display-4 text-center">Exequiel Arguello</h1>
+                <p class="lead text-center">Junior Backend Developer</p>
+
+                <hr class="my-4">
+
+                <h3>Acerca de mí:</h3>
+                <p>Soy un desarrollador back-end junior con pasión por aprender y crecer en el mundo tecnológico. Tengo experiencia en tecnologías como Python, Django y bases de datos SQL y NoSQL. Estoy buscando oportunidades donde pueda aportar y aprender simultáneamente.</p>
+
+                <h3>Habilidades:</h3>
+                <ul>
+                    <li>Python (Django)</li>
+                    <li>Bases de datos SQL y NoSQL</li>
+                    <li>API RESTful</li>
+                    <li>Javascript</li>
+                    <!-- Agrega más habilidades aquí -->
+                </ul>
+
+                <h3>Proyectos:</h3>
+                <ul>
+                    <li><a href="https://github.com/ExequielARG1/DolarhoyTkinter" target="_blank">Dolar Hoy con Tkinter</a></li>
+                    <li><a href="https://github.com/ExequielARG1/DjangoWanhua" target="_blank">Inmobilaria (En proceso)</a></li>
+                    <li><a href="https://github.com/ExequielARG1/Registro" target="_blank">Template de un registro</a></li>
+                    <!-- Agrega más proyectos aquí -->
+                </ul>
+            </div>
+
+            <!-- Foto -->
+            <div class="col-md-4" data-aos="fade-left" data-aos-delay="200">
+                <img src="../img/perfil.jpg"Tu Foto" class="img-fluid">
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap y AOS (Animate On Scroll) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+{% endblock %}
