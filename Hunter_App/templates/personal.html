@@ -31,7 +31,7 @@
     <!-- Formulario para agregar o modificar personal (solo usuarios autenticados) -->
     {% if user.is_authenticated %}
         <!-- Botón para activar el modal de agregar -->
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#personModal" data-action="add">Agregar</button>
+        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#personModal" data-action="add">Agregar</button>
         <hr>
     {% endif %}
     {% endif %}
@@ -61,7 +61,7 @@
                 <div class="card-footer">
                     <div class="d-flex justify-content-between">
                         <!-- Botón para activar el modal de editar -->
-                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#personModal" data-action="modify" data-person-id="{{ person.id }}">Editar</button>
+                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#personModal" data-action="modify" data-person-id="{{ person.id }}">Editar</button>
 
                         <!-- Botón para eliminar -->
                         <form method="post">
@@ -87,7 +87,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="personModalLabel">Agregar/Modificar Personal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="post" enctype="multipart/form-data" id="personForm">

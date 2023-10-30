@@ -36,20 +36,20 @@
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
                     <h5 class="modal-title" id="confirmationModalLabel">Mensaje Enviado</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Mensaje enviado correctamente.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
 
     {% if user.is_authenticated %}
-        <button type="button" class="btn btn-info mt-3" data-bs-toggle="modal" data-bs-target="#messagesModal">Ver Mensajes</button>
+        <button type="button" class="btn btn-info mt-3" data-toggle="modal" data-target="#messagesModal">Ver Mensajes</button>
 
         <!-- Modal de mensajes para usuarios autenticados -->
         <div class="modal fade" id="messagesModal" tabindex="-1" aria-labelledby="messagesModalLabel" aria-hidden="true">
@@ -57,7 +57,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="messagesModalLabel">Mensajes recibidos</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         {% if messages|length > 0 %}
