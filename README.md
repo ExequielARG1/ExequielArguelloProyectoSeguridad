@@ -1,5 +1,11 @@
 ﻿#Exequiel_Arguello ProyectoSeguridad
 
+LIBRERIAS UTILIZADAS;
+PILLOW
+widget_tweaks
+
+
+
 Este proyecto consiste en una aplicación web que permite a los usuarios  loguearse para poder acceder a la misma. Una vez logueado, el usuario puede crear, editar y eliminar sus propios posts, así como también ver los posts de otros usuarios.
 
 Siendo un proyecto básico con una basta documentación se adapto para este proyecto de este curso.
